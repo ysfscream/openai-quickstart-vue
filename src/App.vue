@@ -12,11 +12,11 @@ const http = axios.create({
   }
 });
 const content = ref('');
-const BTN_TEXT = '提交 🚀'
-const res = ref('✅ 答案将在这里显示')
+const BTN_TEXT = 'Submit 🚀'
+const res = ref('✅ The answer will be displayed here.')
 const btnText = ref(BTN_TEXT)
 const askAi = () => {
-  btnText.value = '正在思考...🤔'
+  btnText.value = 'Thinking...🤔'
   http.post('/completions', {
 	  "model": "gpt-3.5-turbo",
 	  "messages": [{"role": "user", "content": content.value}],
@@ -33,9 +33,9 @@ const askAi = () => {
 </script>
 
 <template>
-  <h2>🤖️ 专属 ChatGPT</h2>
+  <h2>🤖️ My ChatGPT</h2>
   <div class="chat">
-    <input class="input" placeholder="询问我关于...🌽" v-model="content" clear>
+    <input class="input" placeholder="Ask me about...🌽" v-model="content" clear>
     <div class="button-block">
       <button type="button" @click="askAi" class="btn">
         <strong>{{ btnText }}</strong>
@@ -112,7 +112,6 @@ h1 {
 button {
   cursor: pointer;
   height: 32px;
-  font-family: inherit;
   font-size: 16px;
   margin-top: 24px;
   background: royalblue;
@@ -256,7 +255,6 @@ button:active {
 strong {
   z-index: 2;
   font-size: 16px;
-  letter-spacing: 5px;
   color: #FFFFFF;
   text-shadow: 0 0 4px white;
 }

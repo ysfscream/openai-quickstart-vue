@@ -1,7 +1,46 @@
-# Vue 3 + Vite
+# openai-quickstart-vue
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This is a quickstart template for using OpenAI's GPT-3 API in Vue 3.
 
-## Recommended IDE Setup
+![image](./assets/preview.png)
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Setup
+
+1. Clone this repository and navigate into the project directory
+
+    ```shell
+    git clone https://github.com/ysfscream/openai-quickstart-vue.git
+    cd openai-quickstart-vue
+    ```
+
+2. Using `pnpm` to install dependencies
+  
+    ```shell
+    pnpm install
+    ```
+
+3. Create the `.env` file to store your OpenAI API key and Orgnaization ID
+
+    ```shell
+    touch .env
+    ```
+
+4. Add your OpenAI API key and Orgnaization ID to the `.env` file
+
+    ```shell
+    # Example
+    VITE_OPEN_API_KEY=xxxxxxxx
+    VITE_ORG_ID=org-xxxxxxx
+    ```
+
+5. Run the development server, and open [http://localhost:5173](http://localhost:5173) in your browser
+
+    ```shell
+    pnpm dev
+    ```
+
+6. Build the project for production
+
+    ```shell
+    pnpm build
+    ```
