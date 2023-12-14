@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 import axios from 'axios'
 
 console.log(import.meta.env)
@@ -9,33 +9,40 @@ const http = axios.create({
     'Content-Type': 'application/json',
     Authorization: `Bearer ${import.meta.env.VITE_OPEN_API_KEY}`,
     'OpenAI-Organization': import.meta.env.VITE_ORG_ID,
-  }
-});
-const content = ref('');
+  },
+})
+const content = ref('')
 const BTN_TEXT = 'Submit 🚀'
 const res = ref('✅ The answer will be displayed here.')
 const btnText = ref(BTN_TEXT)
-const askAi = () => {
-  btnText.value = 'Thinking...🤔'
-  http.post('/completions', {
-	  "model": "gpt-3.5-turbo",
-	  "messages": [{"role": "user", "content": content.value}],
-	  "temperature": 0.7
-	}).then(function (response) {
-    console.log(response);
-    res.value =  response.data.choices[0].message.content
-  }).catch(function (error) {
-    console.log(error);
-  }).finally(() => {
+
+async function postData() {
+  try {
+    btnText.value = 'Thinking...🤔'
+    const response = await http.post('/completions', {
+      model: 'gpt-3.5-turbo',
+      messages: [{ role: 'user', content: content.value }],
+      temperature: 0.7,
+    })
+    console.log(response)
+    res.value = response.data.choices[0].message.content
+  } catch (error) {
+    console.error(error)
+    res.value = error.response.data.error.message
+  } finally {
     btnText.value = BTN_TEXT
-  })
+  }
+}
+
+const askAi = () => {
+  postData()
 }
 </script>
 
 <template>
   <h2>🤖️ My ChatGPT</h2>
   <div class="chat">
-    <input class="input" placeholder="Ask me about...🌽" v-model="content" clear>
+    <input class="input" placeholder="Ask me about...🌽" v-model="content" clear />
     <div class="button-block">
       <button type="button" @click="askAi" class="btn">
         <strong>{{ btnText }}</strong>
@@ -49,24 +56,9 @@ const askAi = () => {
       </button>
     </div>
     <div class="card">
-      <pre>{{ res  }}</pre>
+      <pre>{{ res }}</pre>
     </div>
-    <!-- <button @click="askAi">
-      <div class="svg-wrapper-1">
-        <div class="svg-wrapper">
-          <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0h24v24H0z" fill="none"></path>
-            <path d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z" fill="currentColor"></path>
-          </svg>
-        </div>
-      </div>
-      <span>{{  btnText  }}</span>
-    </button> -->
   </div>
-  <!-- <button class="shadow__btn" @click="askAi">
-    {{  btnText  }}
-  </button> -->
-  <!-- <input placeholder="请问我" class="input-field" type="text" v-model="content"> -->
 </template>
 
 <style scoped>
@@ -137,35 +129,9 @@ button svg {
   transform-origin: center center;
   transition: transform 0.3s ease-in-out;
 }
-/* 
-button:hover .svg-wrapper {
-  animation: fly-1 0.6s ease-in-out infinite alternate;
-}
-
-button:hover svg {
-  transform: translateX(1.2em) rotate(45deg) scale(1.1);
-}
-
-button:hover span {
-  transform: translateX(5em);
-}
-
-button:active {
-  transform: scale(0.95);
-} */
-/* 
-@keyframes fly-1 {
-  from {
-    transform: translateY(0.1em);
-  }
-
-  to {
-    transform: translateY(-0.1em);
-  }
-} */
 
 .card {
-  background: #07182E;
+  background: #07182e;
   position: relative;
   display: flex;
   place-content: center;
@@ -173,14 +139,14 @@ button:active {
   overflow: hidden;
   border-radius: 16px;
   margin: 24px 0;
-  /* max-height: 420px; */
 }
 
 .card {
   margin-top: 32px;
 }
 
-.card span, .card pre {
+.card span,
+.card pre {
   z-index: 1;
   color: white;
   font-size: 16px;
@@ -196,28 +162,14 @@ button:active {
   transition: all 0.2s linear;
 }
 
-/* @keyframes rotBGimg {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-} */
-
 .card::after {
   content: '';
   position: absolute;
-  background: #07182E;
-  ;
+  background: #07182e;
   inset: 5px;
   border-radius: 16px;
-}  
-/* .card:hover:before {
-  background-image: linear-gradient(180deg, rgb(81, 255, 0), purple);
-  animation: rotBGimg 3.5s linear infinite;
-} */
+}
+
 .button-block {
   display: flex;
   align-items: center;
@@ -236,7 +188,8 @@ button:active {
   transition: 0.5s;
   animation: gradient_301 5s ease infinite;
   border: double 4px transparent;
-  background-image: linear-gradient(#212121, #212121),  linear-gradient(137.48deg, #ffdb3b 10%,#FE53BB 45%, #8F51EA 67%, #0044ff 87%);
+  background-image: linear-gradient(#212121, #212121),
+    linear-gradient(137.48deg, #ffdb3b 10%, #fe53bb 45%, #8f51ea 67%, #0044ff 87%);
   background-origin: border-box;
   background-clip: content-box, border-box;
 }
@@ -255,7 +208,7 @@ button:active {
 strong {
   z-index: 2;
   font-size: 16px;
-  color: #FFFFFF;
+  color: #ffffff;
   text-shadow: 0 0 4px white;
 }
 
@@ -287,18 +240,18 @@ strong {
 }
 
 .btn:hover {
-  transform: scale(1.1)
+  transform: scale(1.1);
 }
 
 .btn:active {
-  border: double 4px #FE53BB;
+  border: double 4px #fe53bb;
   background-origin: border-box;
   background-clip: content-box, border-box;
   animation: none;
 }
 
 .btn:active .circle {
-  background: #FE53BB;
+  background: #fe53bb;
 }
 
 #stars {
@@ -309,7 +262,7 @@ strong {
 }
 
 #stars::after {
-  content: "";
+  content: '';
   position: absolute;
   top: -10rem;
   left: -100rem;
@@ -324,7 +277,7 @@ strong {
 }
 
 #stars::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: -50%;
