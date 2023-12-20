@@ -30,10 +30,9 @@ This is a quickstart template for using OpenAI's GPT-3 API in Vue 3.
     ```shell
     # Example
     VITE_OPEN_API_KEY=xxxxxxxx
-    VITE_ORG_ID=org-xxxxxxx
     ```
 
-5. Run the development server, and open [http://localhost:5173](http://localhost:5173) in your browser
+5. Run the development server, and open [http://localhost:3000](http://localhost:3000) in your browser
 
     ```shell
     pnpm dev
